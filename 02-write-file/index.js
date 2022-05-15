@@ -1,27 +1,21 @@
+const { EOL } = require('os');
 const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
 const { stdin } = process;
 
-// const ws = fs.createWriteStream(path.join(__dirname, 'text.txt'), 'utf-8');
+const ws = fs.createWriteStream(path.join(__dirname, 'text.txt'), 'utf-8');
+const rl = readline.createInterface(stdin, ws);
 
 console.log(
   'Hello! Please type some text below (to exit, type "exit" or press Ctrl + C):'
 );
 
-stdin.on('data', (input) => {
-  const inputString = input.toString().replace(/\r|\n$/g, '');
-  if (inputString === 'exit') {
+rl.on('line', (input) => {
+  if (input === 'exit') {
     process.emit('SIGINT');
   } else {
-    fs.appendFile(
-      path.join(__dirname, 'text.txt'),
-      inputString + '\n',
-      'utf-8',
-      (error) => {
-        if (error) throw error;
-        console.log('Text saved, please type more:');
-      }
-    );
+    ws.write(input + EOL);
   }
 });
 
