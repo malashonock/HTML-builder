@@ -102,6 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
-05-merge-styles/project-dist/bundle.css
-06-build-page/project-dist/index.html
-06-build-page/project-dist/style.css
+
+05-merge-styles/project-dist
+06-build-page/project-dist
