@@ -1,0 +1,19 @@
+const HTML_TEMPLATE_NAME = 'template.html';
+const HTML_BUNDLE_NAME = 'index.html';
+const CSS_BUNDLE_NAME = 'style.css';
+const SRC_FOLDER_STYLES = 'styles';
+const SRC_FOLDER_ASSETS = 'assets';
+const SRC_FOLDER_COMPONENTS = 'components';
+const DEST_FOLDER = 'project-dist';
+const DEST_SUBFOLDER_ASSETS = SRC_FOLDER_ASSETS;
+
+module.exports = {
+  HTML_TEMPLATE_NAME,
+  HTML_BUNDLE_NAME,
+  CSS_BUNDLE_NAME,
+  SRC_FOLDER_COMPONENTS,
+  SRC_FOLDER_STYLES,
+  SRC_FOLDER_ASSETS,
+  DEST_FOLDER,
+  DEST_SUBFOLDER_ASSETS,
+};
