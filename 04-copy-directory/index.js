@@ -1,32 +1,42 @@
-const fs = require('fs');
+const { rm, mkdir, readdir, copyFile } = require('fs/promises');
 const path = require('path');
 
 const SRC_FOLDER = 'files';
 const DEST_FOLDER = 'files-copy';
 
+async function removeDestFolder() {
+  // Delete destination folder with all its contents
+  await rm(path.join(__dirname, DEST_FOLDER), {
+    recursive: true,
+    force: true,
+  });
+}
+
 // Create destination folder, unless it already exists
-fs.mkdir(
-  path.join(__dirname, DEST_FOLDER),
-  { recursive: true },
-  (error, path) => {
-    if (error) throw error;
-    console.log(path ? `New folder created: ${path}` : 'Folder already exists');
-  }
-);
+async function createDestFolder() {
+  await mkdir(
+    path.join(__dirname, DEST_FOLDER),
+    { recursive: true } // now this is redundant, but still
+  );
+}
 
 // Copy files from source folder to destination folder
-fs.readdir(path.join(__dirname, SRC_FOLDER), (error, fileNames) => {
-  if (error) throw error;
-  fileNames.forEach((fileName) => {
-    fs.copyFile(
+async function copyFiles() {
+  const fileNames = await readdir(path.join(__dirname, SRC_FOLDER));
+
+  fileNames.forEach(async (fileName) => {
+    await copyFile(
       path.join(__dirname, SRC_FOLDER, fileName),
-      path.join(__dirname, DEST_FOLDER, fileName),
-      (error) => {
-        if (error) throw error;
-        console.log(
-          `Copied/updated ${fileName} from ${SRC_FOLDER} to ${DEST_FOLDER}`
-        );
-      }
+      path.join(__dirname, DEST_FOLDER, fileName)
     );
   });
-});
+}
+
+async function main() {
+  await removeDestFolder();
+  await createDestFolder();
+  await copyFiles();
+}
+
+// Run the program
+main();
