@@ -63,7 +63,7 @@ async function compileCss() {
     withFileTypes: true,
   });
 
-  let cssBundle;
+  let cssBundle = '';
 
   await Promise.all(
     dirEntries
